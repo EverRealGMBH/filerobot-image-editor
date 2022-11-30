@@ -1,6 +1,6 @@
 {
   "name": "filerobot-image-editor",
-  "version": "4.3.1",
+  "version": "4.3.7",
   "license": "MIT",
   "author": "Scaleflex",
   "homepage": "https://github.com/scaleflex/filerobot-image-editor#readme",
@@ -34,7 +34,7 @@
     "styled-components": "5.3.5"
   },
   "peerDependencies": {
-    "react-filerobot-image-editor": "^4.3.0"
+    "react-filerobot-image-editor": "^4.3.7"
   },
   "scripts": {
     "build:lib": "rimraf lib && cross-env BABEL_ENV=production NODE_ENV=production babel src -d lib --config-file ../../babel.config.json -D"
