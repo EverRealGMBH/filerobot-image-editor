@@ -13,7 +13,6 @@ const useResizeObserver = (onResize = () => {}) => {
       }
 
       const { width, height } = resizeObserver.current;
-      console.log({ width, height });
       let newWidth = width;
       let newHeight = height;
 
@@ -31,10 +30,7 @@ const useResizeObserver = (onResize = () => {}) => {
           console.log({ newWidth, newHeight });
 
           if (newWidth !== width || newHeight !== height) {
-            console.log('onResizeCallback called');
             onResizeCallback.current({ entry, width, height });
-          } else {
-            console.log('onResizeCallback Not Called');
           }
         }
       });
