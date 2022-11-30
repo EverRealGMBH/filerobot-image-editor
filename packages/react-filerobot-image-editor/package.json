@@ -1,6 +1,6 @@
 {
   "name": "@everreal/react-filerobot-image-editor",
-  "version": "4.3.7",
+  "version": "4.4.0",
   "license": "MIT",
   "author": "Scaleflex",
   "homepage": "https://github.com/scaleflex/filerobot-image-editor#readme",
@@ -36,8 +36,8 @@
     "react-konva": "18.1.1"
   },
   "peerDependencies": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "styled-components": ">=5.3.5"
   },
   "scripts": {
