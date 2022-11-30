@@ -111,7 +111,7 @@ type arrowAnnotation = annotationsCommon & {
 
 type rotateAnnotation = {
   angle?: number;
-  componentType?: 'slider' | 'button';
+  componentType?: 'slider' | 'buttons';
 };
 
 type cropPresetItem = {
@@ -259,6 +259,8 @@ export interface FilerobotImageEditorConfig {
   // [TOOLS_IDS.WATERMARK]
   Watermark?: {
     gallery?: string[] | [];
+    textScalingRatio?: number;
+    imageScalingRatio?: number;
   };
   // [TOOLS_IDS.CROP]
   Crop?: {
