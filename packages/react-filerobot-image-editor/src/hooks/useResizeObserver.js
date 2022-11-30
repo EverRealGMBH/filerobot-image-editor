@@ -28,13 +28,9 @@ const useResizeObserver = (onResize = () => {}) => {
           newHeight =
             contentRect.height ??
             (contentBoxSize[0] || contentBoxSize).blockSize;
-          console.log({ newWidth, newHeight });
 
           if (newWidth !== width || newHeight !== height) {
-            console.log('onResizeCallback called');
             onResizeCallback.current({ entry, width, height });
-          } else {
-            console.log('onResizeCallback Not Called');
           }
         }
       });
