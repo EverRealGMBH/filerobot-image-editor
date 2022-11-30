@@ -4,18 +4,40 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 const useResizeObserver = (onResize = () => {}) => {
   const onResizeCallback = useRef(onResize);
   const resizeObserver = useRef();
+  let animationFrame = null;
 
   const observerCallback = useCallback((entries) => {
-    entries.forEach((entry) => {
-      if (entry.contentRect) {
-        const { width, height } = entry.contentRect;
-
-        onResizeCallback.current({
-          entry,
-          width,
-          height,
-        });
+    animationFrame = window?.requestAnimationFrame(() => {
+      if (!Array.isArray(entries) || !entries.length) {
+        return;
       }
+
+      const { width, height } = resizeObserver.current;
+      console.log({ width, height });
+      let newWidth = width;
+      let newHeight = height;
+
+      entries.forEach((entry) => {
+        const { contentBoxSize, contentRect, target } = entry;
+        if (target && target !== resizeObserver.current.el) return;
+
+        if (contentRect) {
+          newWidth =
+            contentRect.width ??
+            (contentBoxSize[0] || contentBoxSize).inlineSize;
+          newHeight =
+            contentRect.height ??
+            (contentBoxSize[0] || contentBoxSize).blockSize;
+          console.log({ newWidth, newHeight });
+
+          if (newWidth !== width || newHeight !== height) {
+            console.log('onResizeCallback called');
+            onResizeCallback.current({ entry, width, height });
+          } else {
+            console.log('onResizeCallback Not Called');
+          }
+        }
+      });
     });
   }, []);
 
@@ -54,6 +76,10 @@ const useResizeObserver = (onResize = () => {}) => {
   }, []);
 
   const removeObserver = useCallback(() => {
+    if (animationFrame) {
+      window.cancelAnimationFrame(animationFrame);
+    }
+
     if (resizeObserver.current) {
       resizeObserver.current.disconnect();
     }
