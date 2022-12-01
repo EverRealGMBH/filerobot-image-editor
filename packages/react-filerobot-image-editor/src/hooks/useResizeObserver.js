@@ -28,7 +28,11 @@ const useResizeObserver = (onResize = () => {}) => {
             (contentBoxSize[0] || contentBoxSize)?.blockSize;
 
           if (newWidth !== width || newHeight !== height) {
-            onResizeCallback.current({ entry, width, height });
+            onResizeCallback.current({
+              entry,
+              width: newWidth,
+              height: newHeight,
+            });
           }
         }
       });
