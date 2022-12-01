@@ -12,7 +12,7 @@ const useResizeObserver = (onResize = () => {}) => {
         return;
       }
 
-      const { width = 0, height = 0 } = resizeObserver.current || {};
+      const { width = 0, height = 0 } = resizeObserver?.current || {};
       let newWidth = width;
       let newHeight = height;
 
