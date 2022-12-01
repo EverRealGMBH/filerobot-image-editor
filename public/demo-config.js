@@ -5,8 +5,8 @@ import Social from '@scaleflex/icons/social';
 import CropClassicTv from '@scaleflex/icons/crop-classic-tv';
 import CropCinemaScope from '@scaleflex/icons/crop-cinema-scope';
 
-import FilerobotImageEditor from 'filerobot-image-editor/src';
-import toPrecisedFloat from 'react-filerobot-image-editor/src/utils/toPrecisedFloat';
+import FilerobotImageEditor from '@everreal/filerobot-image-editor/src';
+import toPrecisedFloat from '@everreal/react-filerobot-image-editor/src/utils/toPrecisedFloat';
 
 const { TOOLS } = FilerobotImageEditor;
 
@@ -190,8 +190,8 @@ const config = {
     presetsFolders: cropFolderPresets,
   },
   [TOOLS.ROTATE]: {
-    angle: 60,
-    componentType: 'slider',
+    angle: 90,
+    componentType: 'buttons',
   },
   [TOOLS.WATERMARK]: {
     gallery: [
@@ -207,6 +207,8 @@ const config = {
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/Logo+Vertical/SCALEFLEX+LOGO+VERTICAL+WHITE+TEXT.png?vh=fca07b',
       'https://assets.scaleflex.com/Marketing/Logos/Scaleflex+Logos/Logo+Vertical/SCALEFLEX+LOGO+VERTICAL.PNG?vh=9a6fa1',
     ],
+    textScalingRatio: 0.33,
+    imageScalingRatio: 0.33,
   },
   [TOOLS.TEXT]: {
     text: 'Filerobot...',
