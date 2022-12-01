@@ -14,7 +14,7 @@ const useResizeObserver = (onResize = () => {}) => {
 
       let newWidth = 0;
       let newHeight = 0;
-      if (resizeObserver) {
+      if (resizeObserver.current) {
         const { width, height } = resizeObserver.current;
         newWidth = width;
         newHeight = height;
