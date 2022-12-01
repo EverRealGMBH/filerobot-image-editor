@@ -1,6 +1,6 @@
 {
   "name": "@everreal/filerobot-image-editor-root",
-  "version": "4.4.6",
+  "version": "4.4.7",
   "license": "MIT",
   "private": true,
   "workspaces": [
