@@ -1,6 +1,6 @@
 {
   "name": "@everreal/react-filerobot-image-editor",
-  "version": "4.4.6",
+  "version": "4.4.14",
   "license": "MIT",
   "author": "Scaleflex",
   "homepage": "https://github.com/scaleflex/filerobot-image-editor#readme",
@@ -33,14 +33,15 @@
     "@scaleflex/ui": "1.0.0-beta.80",
     "konva": "8.3.2",
     "prop-types": "15.7.2",
-    "react-konva": "18.1.1"
+    "react-konva": "17.0.2-5"
   },
   "peerDependencies": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "styled-components": ">=5.3.5"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "styled-components": ">=5.1.0"
   },
   "scripts": {
     "build:lib": "rimraf lib && cross-env BABEL_ENV=production NODE_ENV=production babel src -d lib --config-file ../../babel.config.json -D"
-  }
+  },
+  "gitHead": "ce857a6f19ff8c91ff1c4c0bab6ce4fc2da37c1c"
 }
