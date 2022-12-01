@@ -12,17 +12,12 @@ const useResizeObserver = (onResize = () => {}) => {
         return;
       }
 
-      let newWidth = 0;
-      let newHeight = 0;
-      if (resizeObserver.current) {
-        const { width, height } = resizeObserver.current;
-        newWidth = width;
-        newHeight = height;
-      }
+      const { width = 0, height = 0 } = resizeObserver.current || {};
+      let newWidth = width;
+      let newHeight = height;
 
       entries.forEach((entry) => {
         const { contentBoxSize, contentRect } = entry;
-        // if (target && target !== resizeObserver.current.el) return;
 
         if (contentRect) {
           newWidth =
