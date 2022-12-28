@@ -4,7 +4,7 @@
   "packages": [
     "packages/*"
   ],
-  "version": "4.4.17",
+  "version": "4.4.18",
   "command": {
     "version": {
       "message": "Chore(Release): publish new version %s🔥🚀"
