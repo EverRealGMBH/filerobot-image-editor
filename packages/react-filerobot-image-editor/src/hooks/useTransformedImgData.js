@@ -219,6 +219,11 @@ const useTransformedImgData = () => {
     designLayer.setAttr('isSaving', false);
     dispatch({ type: SET_SAVED });
     imgNode.clearCache();
+    preparedCanvas.children[0].destroy();
+    preparedDesignLayer.destroy();
+    finalCanvas.destroy();
+    finalImgBase64.destroy();
+    document.body.removeChild(`#${IMAGE_NODE_ID}`);
 
     Konva.pixelRatio = previewPixelRatio;
 
