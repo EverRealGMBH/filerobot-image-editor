@@ -221,8 +221,6 @@ const useTransformedImgData = () => {
     imgNode.clearCache();
     preparedCanvas.children[0].destroy();
     preparedDesignLayer.destroy();
-    document.body.removeChild(`#${IMAGE_NODE_ID}`);
-
     Konva.pixelRatio = previewPixelRatio;
 
     const hideLoadingSpinner = () => {

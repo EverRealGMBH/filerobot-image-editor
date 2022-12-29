@@ -6,6 +6,7 @@ const releaseCanvas = (canvas) => {
     desynchronized: true,
   });
   ctx && ctx.clearRect(0, 0, 1, 1);
+  ctx.remove();
 };
 
 export default releaseCanvas;
