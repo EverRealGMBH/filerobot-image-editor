@@ -39,6 +39,8 @@ export default {
   },
   [TOOLS_IDS.IMAGE]: {
     fill: undefined,
+    disableUpload: false,
+    gallery: [],
   },
   [TOOLS_IDS.RECT]: {
     cornerRadius: 0,
@@ -51,6 +53,7 @@ export default {
     strokeWidth: 1,
     tension: 0.5,
     lineCap: 'round',
+    selectAnnotationAfterDrawing: true,
   },
   [TOOLS_IDS.LINE]: {
     lineCap: 'butt', // butt/round/square
@@ -94,6 +97,7 @@ export default {
   closeAfterSave: false,
   defaultSavedImageName: undefined,
   defaultSavedImageType: null,
+  defaultSavedImageQuality: 0.92,
   forceToPngInEllipticalCrop: false,
   useBackendTranslations: true,
   translations: null,
@@ -125,4 +129,5 @@ export default {
   onModify: undefined,
   useZoomPresetsMenu: true,
   disableZooming: false,
+  noCrossOrigin: false,
 };

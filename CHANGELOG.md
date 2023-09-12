@@ -21,6 +21,92 @@ Types of changes:
 
 ---
 
+
+## v4.5.2 - 2023-09-08
+
+### Fixed
+
+- Docs. react-konva proper version that works with react 17.
+- Can't draw an ellipse inside polygon or rectangle [Issue #366](https://github.com/scaleflex/filerobot-image-editor/issues/366)
+- changing save button label causing shifting problem
+
+### Added
+
+- [`selectAnnotationAfterDrawing`](https://github.com/scaleflex/filerobot-image-editor#pen) property that enables/disables auto selection of drawn annotation using the pen tool.
+
+### Improved
+
+- If the watermark image is not loaded due to some reason and user tries to add it as watermark, feedback error will be shown.
+
+
+## v4.5.1 - 2023-06-26
+
+### Fixed
+
+- Typescript `theme` types.
+
+## v4.5.0 - 2023-06-09
+
+### Fixed
+
+- Crop doesn't work if no action with the canvas's UI ([Issue #298](https://github.com/scaleflex/filerobot-image-editor/issues/298)).
+- Bug of having error on unmounting the component with textarea opened while adding text ([Issue #322](https://github.com/scaleflex/filerobot-image-editor/issues/322)).
+- Resize isn't considered in developer's transform function `getCurrentImgDataFnRef` ([Issue #344](https://github.com/scaleflex/filerobot-image-editor/issues/344)).
+
+### Added
+- `noCrossOrigin` property changes the option while loading the original image ([Issue #344](https://github.com/scaleflex/filerobot-image-editor/issues/319)).
+
+### Improved
+
+- The add watermark button design & label
+- Render function logic in JS version.
+- Tabs labels become center aligned & space broken in-case of tab's label with multiple words.
+- Typescript types (adding `theme` object into types & update the `updateState` function naming in VanillaJs version package's types)
+- The loading of original image by waiting a tick for avoiding issues possible to happen with the whole plugin ([PR #334](https://github.com/scaleflex/filerobot-image-editor/pull/334)).
+
+## v4.4.0 - 2023-03-30
+
+### Fixed
+
+- Respect `defaultSavedImageName` in case of providing `source` property with `HTMLImageElement`
+- Crop transformer is not updated on changing to (original) crop preset if no interaction happened with canvas ([#291](https://github.com/scaleflex/filerobot-image-editor/issues/291)).
+
+### Added
+
+- Backward compatability for react 17.
+- `defaultSavedImageQuality` property for increasing/decreasing the saved image quality whether default save behavior used or not.
+- Support adding gallery for image tool to enable possibility to add image from custom/preloaded images `image.gallery`.
+- Support `image.disableUpload` which disables the possibility to upload image from local device.
+
+### Improved
+
+- If image changed, re-extract its name & extension.
+- Split react-konva library from dependencies and make it developer installable to determine the version to use.
+
+## v4.3.8 - 2023-02-10
+
+### Fixed
+
+- Move crossOrigin = 'Anonymous' before .src for avoiding sometimes CORS issue (Issue [#242](https://github.com/scaleflex/filerobot-image-editor/issues/242)).
+- Some filters/finetunes names are changed on saving the image in prod (Issue [#266](https://github.com/scaleflex/filerobot-image-editor/issues/266)).
+- Issue of sometimes the canvas don't draw the main image (Issues [#251](https://github.com/scaleflex/filerobot-image-editor/issues/251) & [#276](https://github.com/scaleflex/filerobot-image-editor/issues/276)).
+- 50x50 image and smaller is not working (Issue [#220](https://github.com/scaleflex/filerobot-image-editor/issues/220)).
+- PEN as default TOOL don't work bug (Issue [#288](https://github.com/scaleflex/filerobot-image-editor/issues/288))
+- Issue of button doesn't have a type (Issue [#268](https://github.com/scaleflex/filerobot-image-editor/issues/268)).
+
+
+### Improved
+
+- Filters' previews, Consider ratio in image filters preview by center cropping the image (Issue [#253](https://github.com/scaleflex/filerobot-image-editor/issues/253)).
+- If no Annotation component found avoid showing error (possible to happen if provided wrong annotation type from developer side).
+- The behavior of color picker, by splitting the saved fill/stroke/shadow colors (Issue [#285](https://github.com/scaleflex/filerobot-image-editor/issues/285)).
+- Update TS types for `defaultSavedImageType`.
+- Update `@scaleflex/ui`, `@scaleflex/icons`, `konva` & `react-konva`.
+
+### Security
+
+- Apply Dependabot suggested fixes/improvements.
+
 ## v4.3.7 - 2022-08-31
 
 ### Added

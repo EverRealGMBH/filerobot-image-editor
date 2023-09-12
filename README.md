@@ -108,16 +108,26 @@ The Filerobot Image Editor is the easiest way to integrate an easy-to-use image 
 
 > Following prerequisites are required only in React Component installation, but they're included in CDN bundle installation and added as dependencies of other bridges/adapters packages.
 
-<
+> All of the following libraries are required, as the plugin is depending on them in the implementation.
 
-- react, react-dom: >= v18.2.0
+- react, react-dom: >= v17.0.0
+- react-konva >= v17.0.1-1
 - styled-components: >= v5.3.5
+
+**Compatability table (installed version of react should meet the opposite react-konva version in the table).**
+
+| react & react-dom versions |    react-konva version    |
+| -------------------------- | -------------------       |
+| v17.x.x                    | >= v17.0.1-1 <= v17.0.2-6 |
+| v18.x.x                    | v18.x.x                   |
 
 <details>
   <summary>Prerequisites Installation (Click to show)</summary>
 
-- react, react-dom: `npm install --save react react-dom` or use their CDN.
-- styled-components: `npm install --save styled-components` or use their CDN.
+- react, react-dom, react-konva & styled-components:
+```bash
+npm install --save react react-dom react-konva styled-components
+```
 </details>
 
 <hr />
@@ -359,12 +369,35 @@ The image url or an `HTMLImageElement` for the image which the operations/edits 
 Theme from [@scaleflex/ui](https://github.com/scaleflex/ui/blob/1617f8b19ade7199110df6e2ceff77dacefd75bd/packages/ui/src/theme/entity/default-theme.ts#L43) deep merged with following overrides
 
 ```
+// Overrides
 {
   palette: {
     'bg-primary-active': '#ECF3FF',
   },
   typography: {
     fontFamily: 'Roboto, Arial',
+  },
+}
+
+// Used properties in case you need to provide your custom colors/theme, you should customize those properties (all or any of them) with your color hex/name string values.
+{
+  palette: {
+    'bg-secondary': '....',
+    'bg-primary': : '....',
+    'bg-primary-active': : '....',
+    'accent-primary': : '....',
+    'accent-primary-active': : '....',
+    'icons-primary': : '....',
+    'icons-secondary': : '....',
+    'borders-secondary': : '....',
+    'borders-primary': : '....',
+    'borders-strong': : '....',
+    'light-shadow': : '....',
+    'warning': : '....',
+
+  },
+  typography: {
+    fontFamily: : '....', // Font family string value, you should import this font in your app.
   },
 }
 ```
@@ -498,6 +531,22 @@ The default type used and selected in saving the image (the user has the possibi
 
 > NOTE: Quality modification will be applied to `jpeg`, `jpg` and `webp` types in returned [`base64`](#onsave) format only while saving the image by the default behavior.
 
+#### `defaultSavedImageQuality`
+
+<u>Type:</u> `number`
+
+<u>Supported version:</u> +v4.4.0
+
+<u>Default:</u> `0.92`
+
+Possible values: `[0.1 - 1]`
+
+The default value used for quality property used in the final saving of the canvas. the higher value used (Min: 0.1, Max: 1) the higher generated image's resolution the higher generated image file's size and vice-versa.
+
+> NOTE: Quality modification will be applied to `jpeg`, `jpg` and `webp` types in returned [`base64`](#onsave) format only.
+
+> NOTE: The value of this property will reflect the quality option found in the default save behavior's UI (if default save behavior used otherwise UI only is not affected).
+
 #### `forceToPngInEllipticalCrop`
 
 <u>Type:</u> `boolean`
@@ -622,14 +671,21 @@ The options available for the text annotation tool in additon to the annotations
 {
     ...annotationsCommon,
     fill: undefined,
+    disableUpload: false,
+    gallery: [{
+      originalUrl: '...', // The url of the image in original size to be added in canvas
+      previewUrl: '...', // The url of the image to be used as preview in gallery list (for less data consuming & better performance).
+    }]
 }
 ```
 
 The options available for image annotation tool in additon to the annotationsCommon property,
 
-| Property   | Type   | Default (possible values) | Description                                   |
-| ---------- | ------ | ------------------------- | --------------------------------------------- |
-| **`fill`** | string | undefined                 | The color fills the image's transparent parts |
+| Property            | Type                                            | Default (possible values) | Description                                                                                                                                                                                                                                               |
+| ------------------- | ----------------------------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`fill`**          | string                                          | undefined                 | The color fills the image's transparent parts                                                                                                                                                                                                             |
+| **`disableUpload`** | boolean                                         | false                     | If `true` Disables the possibility to upload/add image from local device (user's computer)                                                                                                                                                                |
+| **`gallery`**       | ({ originalUrl: string, previewUrl: string })[] | []                        | Custom images that the user will choose from, to add on the canvas, `originalUrl` is the url for the original size for an image `previewUrl` is the preview url for the same image (considers as thumbnail for better performance & less data consuming). |
 
 #### `Rect`
 
@@ -697,15 +753,17 @@ The available options for polygon annotation tool in additon to the annotationsC
     strokeWidth: 1,
     tension: 0.5,
     lineCap: 'round',
+    selectAnnotationAfterDrawing: true,
 }
 ```
 
 The available options for pen annotation tool in additon to the annotationsCommon property,
 
-| Property      | Type   | Default (possible values)              | Description                                                                                                 |
-| ------------- | ------ | -------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| **`lineCap`** | string | 'butt' ('butt' \| 'round' \| 'square') | The start & end borders line cap                                                                            |
-| **`tension`** | number | 0.5                                    | Tension value of the drawn line higher value makes line more curvy & tensioned (better to leave it default) |
+| Property                           | Type    | Default (possible values)              | Description                                                                                                 |
+| ---------------------------------- | ------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **`lineCap`**                      | string  | 'butt' ('butt' \| 'round' \| 'square') | The start & end borders line cap                                                                            |
+| **`tension`**                      | number  | 0.5                                    | Tension value of the drawn line higher value makes line more curvy & tensioned (better to leave it default) |
+| **`selectAnnotationAfterDrawing`** | boolean | true                                   | Auto selection after drawing                                                                                |
 
 #### `Line`
 
@@ -1096,7 +1154,7 @@ Hides all the UI of the plugin including (save & close buttons, tabs & tools bar
 
 <u>Default:</u> undefined
 
-If provided the canvas processing/saving/manipulating function will be assigned as `.current` proeprty to this passed `Object | React Ref` to be used/called somewhere else other than the default save button and returns both the final transformed image data object & current design state which are same as params as [`onSave callback`](#onsave),
+If provided the canvas processing/saving/manipulating function will be assigned as `.current` property to this passed `Object | React Ref` to be used/called somewhere else other than the default save button and returns both the final transformed image data object & current design state which are same as params as [`onSave callback`](#onsave),
 
 The passed object/ref becomes with the following syntax after assigning internally
 
@@ -1164,6 +1222,20 @@ Note: If [`disableZooming`](#disablezooming) property is `true` then this proper
 <u>Default:</u> false
 
 If `true`, there will be no zooming functionality available in the plugin & UI related to zooming will be removed.
+
+#### `noCrossOrigin`
+
+<u>Type:</u> `Boolean`
+
+<u>Supported version:</u> +v4.5.0
+
+<u>Default:</u> false
+
+If `true`, `crossOrigin=Anonymous` property with its value won't be used in the original image (image to be edited) loading request -- not recommended --.
+
+> Disabling the usage of crossOrigin might cause some issues with applying filters or saving the image so it is not recommended to provide it `true` unless you know what you are doing.
+
+> If u face strange behavior with CORS on chromium based browser, please check this issue [#319](https://github.com/scaleflex/filerobot-image-editor/issues/319) might be useful for you.
 
 ### Callbacks
 
@@ -1272,6 +1344,7 @@ Calling the function will trigger the function responsible for handling/manipula
 This project is used by the following companies:
 
 - [Scaleflex](https://scaleflex.com/)
+- [Fast Image Resize](https://benkaiser.github.io/fast-image-resizer/)
 
 > Fork the repoistory, append your company's name with the URL in above format inside the README.md file and make a PR! or create a GitHub issue mentioning (Site's name & domain).
 

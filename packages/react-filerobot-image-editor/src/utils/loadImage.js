@@ -1,10 +1,12 @@
 import extractNameFromUrl from './extractNameFromUrl';
 
-const loadImage = (imageSrc, imageFileName) =>
+const loadImage = (imageSrc, imageFileName, noCrossOrigin = false) =>
   new Promise((resolve, reject) => {
     const imageElement = new Image();
+    if (!noCrossOrigin) {
+      imageElement.crossOrigin = 'Anonymous';
+    }
     imageElement.src = imageSrc;
-    imageElement.crossOrigin = 'Anonymous';
     imageElement.name = imageFileName ?? extractNameFromUrl(imageSrc);
     imageElement.onload = () => {
       resolve(imageElement);

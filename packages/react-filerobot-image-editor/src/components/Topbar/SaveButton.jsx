@@ -7,10 +7,12 @@ import Label from '@scaleflex/ui/core/label';
 /** Internal Dependencies */
 import { useStore, useTransformedImgData } from 'hooks';
 import getFileFullName from 'utils/getFileFullName';
+import getDefaultSaveQuality from 'utils/getDefaultSaveQuality';
 import {
   CLOSING_REASONS,
   ELLIPSE_CROP,
   SUPPORTED_IMAGE_TYPES,
+  DEFAULT_SAVE_QUALITY,
 } from 'utils/constants';
 import { HIDE_LOADER, SET_FEEDBACK, SHOW_LOADER } from 'actions';
 import Modal from 'components/common/Modal';
@@ -26,7 +28,7 @@ import {
 } from './Topbar.styled';
 
 const sliderStyle = { marginBottom: 16 };
-const saveButtonWrapperStyle = { width: 67 }; // 67px same width as tabs bar
+const saveButtonWrapperStyle = { minWidth: 67, width: 'fit-content' }; // 67px same width as tabs bar
 const saveButtonMenuStyle = { marginLeft: 12 };
 
 let isFieSaveMounted = true;
@@ -50,13 +52,17 @@ const SaveButton = () => {
       onBeforeSave,
       onSave,
       forceToPngInEllipticalCrop,
+      defaultSavedImageName,
       defaultSavedImageType,
+      defaultSavedImageQuality = DEFAULT_SAVE_QUALITY,
       useCloudimage,
       moreSaveOptions,
     },
   } = state;
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [imageFileInfo, setImageFileInfo] = useState({ quality: 0.92 });
+  const [imageFileInfo, setImageFileInfo] = useState({
+    quality: getDefaultSaveQuality(defaultSavedImageQuality),
+  });
   const transformImgFn = useTransformedImgData();
   const isQualityAcceptable = ['jpeg', 'jpg', 'webp'].includes(
     imageFileInfo.extension,
@@ -178,20 +184,30 @@ const SaveButton = () => {
     }
   };
 
+  const setFileNameAndExtension = () => {
+    const { name, extension } = getFileFullName(
+      defaultSavedImageName || originalImage.name,
+      forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
+        ? 'png'
+        : SUPPORTED_IMAGE_TYPES.includes(
+            defaultSavedImageType?.toLowerCase(),
+          ) && defaultSavedImageType,
+    );
+
+    setImageFileInfo({ ...imageFileInfo, name, extension });
+  };
+
+  useEffect(() => {
+    if (originalImage) {
+      setFileNameAndExtension();
+    }
+  }, [originalImage]);
+
   useEffect(() => {
     if (originalImage && (!imageFileInfo.name || !imageFileInfo.extension)) {
-      const { name, extension } = getFileFullName(
-        originalImage.name,
-        forceToPngInEllipticalCrop && crop.ratio === ELLIPSE_CROP
-          ? 'png'
-          : SUPPORTED_IMAGE_TYPES.includes(
-              defaultSavedImageType?.toLowerCase(),
-            ) && defaultSavedImageType,
-      );
-
-      setImageFileInfo({ ...imageFileInfo, name, extension });
+      setFileNameAndExtension();
     }
-  }, [originalImage, isModalOpened]);
+  }, [isModalOpened]);
 
   useEffect(() => {
     setImageFileInfo({
@@ -249,6 +265,7 @@ const SaveButton = () => {
         <Modal
           className="FIE_save-modal"
           title={t('saveAsModalLabel')}
+          // eslint-disable-next-line react/no-unstable-nested-components
           Icon={(props) => (
             <SaveAs color={theme.palette['accent-primary']} {...props} />
           )}
@@ -267,7 +284,7 @@ const SaveButton = () => {
             onChange={changeFileName}
             size="sm"
             placeholder={t('name')}
-            error={Boolean(imageFileInfo.name)}
+            error={!imageFileInfo.name}
             focusOnMount
           />
           <StyledFileExtensionSelect
