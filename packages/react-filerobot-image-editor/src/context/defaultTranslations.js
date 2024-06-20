@@ -52,6 +52,8 @@ export default {
   imageTool: 'Image',
   importing: 'Importing...',
   addImage: '+ Add image',
+  uploadImage: 'Upload image',
+  fromGallery: 'From gallery',
   lineTool: 'Line',
   penTool: 'Pen',
   polygonTool: 'Polygon',
@@ -73,6 +75,7 @@ export default {
   lineHeight: 'Line height',
   warmthTool: 'Warmth',
   addWatermark: '+ Add watermark',
+  addTextWatermark: '+ Add text watermark',
   addWatermarkTitle: 'Choose the watermark type',
   uploadWatermark: 'Upload watermark',
   addWatermarkAsText: 'Add as text',
@@ -93,4 +96,6 @@ export default {
     'Note, the selected crop area is lower than the applied resize which might cause quality decrease',
   actualSize: 'Actual size (100%)',
   fitSize: 'Fit size',
+  addImageTitle: 'Select image to add...',
+  mutualizedFailedToLoadImg: 'Failed to load image.',
 };

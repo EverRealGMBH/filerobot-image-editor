@@ -1,3 +1,4 @@
+import { ThemeOverride } from '@scaleflex/ui/theme';
 import { FunctionComponent, RefObject } from 'react';
 
 declare const TABS = {
@@ -86,6 +87,14 @@ type textAnnotation = annotationsCommon & {
   fontStyle?: 'normal' | 'bold' | 'italic' | 'bold italic';
 };
 
+type imageAnnotation = annotationsCommon & {
+  disableUpload?: boolean;
+  gallery?: {
+    originalUrl: string;
+    previewUrl: string;
+  }[];
+};
+
 type rectAnnotation = annotationsCommon & {
   cornerRadius?: number;
 };
@@ -97,6 +106,7 @@ type polygonAnnotation = annotationsCommon & {
 type penAnnotation = annotationsCommon & {
   tension?: number;
   lineCap?: lineCap;
+  selectAnnotationAfterDrawing?: boolean;
 };
 
 type lineAnnotation = annotationsCommon & {
@@ -118,7 +128,7 @@ type cropPresetItem = {
   titleKey: string;
   width?: number;
   height?: number;
-  ratio?: string;
+  ratio?: string | number;
   descriptionKey?: string;
   icon?: string | HTMLElement | FunctionComponent;
   disableManualResize?: boolean;
@@ -150,7 +160,7 @@ type imageDesignState = {
   filter?: string;
   adjustments?: {
     crop: {
-      ratio: string;
+      ratio: string | number;
       width?: number;
       height?: number;
       x?: number;
@@ -230,6 +240,7 @@ type saveOption = {
 };
 
 export interface FilerobotImageEditorConfig {
+  theme?: ThemeOverride;
   source: string | HTMLImageElement;
   annotationsCommon?: annotationsCommon;
   // [TOOLS_IDS.TEXT]
@@ -241,7 +252,7 @@ export interface FilerobotImageEditorConfig {
     ) => void;
   };
   // [TOOLS_IDS.IMAGE]
-  Image?: annotationsCommon;
+  Image?: imageAnnotation;
   // [TOOLS_IDS.ELLIPSE]
   Ellipse?: annotationsCommon;
   // [TOOLS_IDS.RECT]
@@ -284,7 +295,8 @@ export interface FilerobotImageEditorConfig {
   onClose?: (closeReason: closingReasons, haveNotSavedChanges: boolean) => void;
   closeAfterSave?: boolean;
   defaultSavedImageName?: string;
-  defaultSavedImageType?: 'png' | 'jpeg' | 'webp';
+  defaultSavedImageType?: 'png' | 'jpeg' | 'jpg' | 'webp';
+  defaultSavedImageQuality?: number;
   forceToPngInEllipticalCrop?: boolean;
   useBackendTranslations?: boolean;
   translations?: object;
@@ -335,6 +347,7 @@ export interface FilerobotImageEditorConfig {
   onModify?: (currentImageDesignState: imageDesignState) => void;
   useZoomPresetsMenu?: boolean;
   disableZooming?: boolean;
+  noCrossOrigin?: boolean;
 }
 
 declare const FilerobotImageEditor: FunctionComponent<FilerobotImageEditorConfig>;
